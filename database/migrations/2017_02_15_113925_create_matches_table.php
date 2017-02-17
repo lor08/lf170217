@@ -21,14 +21,15 @@ class CreateMatchesTable extends Migration
 
 			$table->string('stage')->nullable();
 			$table->integer('teamHome_id')->unsigned();
-			$table->integer('resHome')->unsigned()->nullable();
+			$table->string('resHome')->nullable();
 			$table->integer('teamGuest_id')->unsigned();
-			$table->integer('resGuest')->unsigned()->nullable();
+			$table->string('resGuest')->nullable();
 
 			$table->text('announce')->nullable();
 
-			$table->dateTime('date')->nullable();
-			$table->time('time')->nullable();
+			$table->dateTime('datetime')->nullable();
+
+			$table->string('unstring')->nullable()->unique();
 
 			$table->integer('view')->unsigned()->default(0);
 			$table->timestamps();

@@ -45,7 +45,7 @@ class Match extends Section
 	 */
 	public function onDisplay()
 	{
-		$display = AdminDisplay::datatables()->setHtmlAttribute('class', 'table-primary');
+		$display = AdminDisplay::datatablesAsync()->setHtmlAttribute('class', 'table-primary');
 		$display->with(['league', 'teamHome', 'teamGuest']);
 		$display->setColumnFilters([
 			null,
@@ -74,7 +74,7 @@ class Match extends Section
 			AdminColumn::link('resGuest', 'resGuest')->setWidth('30px')->setHtmlAttribute('class', 'text-center'),
 			AdminColumn::link('teamGuest.name', 'teamGuest')->setWidth('300px'),
 
-			AdminColumn::datetime('date', 'dateFull')->setFormat('d.m.Y H:i')->setWidth('150px'),
+			AdminColumn::datetime('datetime', 'datetime')->setFormat('d.m.Y H:i')->setWidth('150px'),
 			AdminColumn::text('view', 'view')->setWidth('30px')
 		);
 		return $display;
@@ -127,8 +127,7 @@ class Match extends Section
 						AdminFormElement::text('resGuest', 'resGuest'),
 					], 4)
 					->addColumn([
-						AdminFormElement::date('date', 'date'),
-						AdminFormElement::time('time', 'time'),
+						AdminFormElement::datetime('datetime', 'datetime'),
 						AdminFormElement::textarea('announce', 'announce'),
 					], 4)
 			]);

@@ -7,6 +7,7 @@ use Goutte\Client;
 use Response;
 use App\Models\Match;
 use App\Models\Club;
+use Carbon\Carbon;
 
 class GrabberController extends Controller
 {
@@ -79,6 +80,7 @@ class GrabberController extends Controller
 	 */
 	public function getChampionatCalendar($T_CODE, $T_ID)
 	{
+		dd();
 		$client = new Client();
 		$data = array();
 		$page = $client->request('GET', 'https://www.championat.com/football/' . $T_CODE . '/' . $T_ID . '/calendar.html');
@@ -86,11 +88,15 @@ class GrabberController extends Controller
 		$table->filter('tbody tr')->each(function ($stroka) use ($client, &$data) {
 			$resHome = (int)$stroka->filter('.sport__calendar__table__result a span')->first()->text();
 			$resGuest = (int)$stroka->filter('.sport__calendar__table__result a span')->last()->text();
-			$datetime = explode(",", trim($stroka->filter('.sport__calendar__table__date')->text()));
+			$date = explode(", ", trim($stroka->filter('.sport__calendar__table__date')->text()));
+			if (isset($date[1]) and $date[1] == "пер."){
+				$date = new \DateTime($date[0]);
+			} else {
+				$date = new \DateTime(trim($stroka->filter('.sport__calendar__table__date')->text()));
+			}
 			$data[] = array(
 				'tur' => $stroka->filter('.sport__calendar__table__tour')->text(),
-				'date' => trim($datetime[0]),
-				'time' => isset($datetime[1]) ? trim($datetime[1]) : '',
+				'datetime' => $date->format('Y-m-d H:i'),
 				'teamHome' => $stroka->filter('.sport__calendar__table__teams a')->first()->text(),
 				'teamGuest' => $stroka->filter('.sport__calendar__table__teams a')->last()->text(),
 				'resHome' => $stroka->filter('.sport__calendar__table__result a span')->first()->text(),
@@ -100,46 +106,55 @@ class GrabberController extends Controller
 			);
 		});
 //		array_splice($data, 2);
-		$country_id = 2;
+		$country_id = 5;
 		$league_id = 3;
 		$year_id = 1;
-		foreach ($data as $key => $item) {
-//			if ($key == 0) continue;
-			$match = new Match();
-			$match->league_id = $league_id;
-			$match->year_id = $year_id;
-			$match->stage = $item['tur'];
-			$match->date = $item['date'];
-			$match->time = $item['time'];
-
-			$teamHome = Club::where('name', $item['teamHome'])->first();
-			if(!$teamHome){
-				$teamHome = new Club();
-				$teamHome->country_id = $country_id;
-				$teamHome->league_id = $league_id;
-				$teamHome->name = $item['teamHome'];
-				$teamHome->slug = str_slug($item['teamHome']);
-				$teamHome->saveOrFail();
-			}
-			$match->teamHome_id = $teamHome->id;
-			$match->resHome = $item['resHome'];
-
-			$teamGuest = Club::where('name', $item['teamGuest'])->first();
-			if(!$teamGuest){
-				$teamGuest = new Club();
-				$teamGuest->country_id = $country_id;
-				$teamGuest->league_id = $league_id;
-				$teamGuest->name = $item['teamGuest'];
-				$teamGuest->slug = str_slug($item['teamGuest']);
-				$teamGuest->saveOrFail();
-			}
-			$match->teamGuest_id = $teamGuest->id;
-			$match->resGuest = $item['resGuest'];
-
-			$match->saveOrFail();
-			echo $match->id . "\n";
-		}
-//		dd($data);
+//		foreach ($data as $key => $item) {
+////			if ($key == 0) continue;
+//			$unstring = md5($country_id . $league_id . $year_id . $item['teamHome'] . $item['teamGuest']);
+//
+//			$match = Match::where('unstring', $unstring)->first();
+//			if($match){
+//				$match->datetime = $item['datetime'];
+//				$match->resHome = $item['resHome'];
+//				$match->resGuest = $item['resGuest'];
+////				dd($match);
+//			}else{
+//				$match = new Match();
+//				$match->league_id = $league_id;
+//				$match->year_id = $year_id;
+//				$match->stage = $item['tur'];
+//				$match->datetime = $item['datetime'];
+//				$match->unstring = $unstring;
+//
+//				$teamHome = Club::where('name', $item['teamHome'])->first();
+//				if (!$teamHome) {
+//					$teamHome = new Club();
+//					$teamHome->country_id = $country_id;
+//					$teamHome->league_id = $league_id;
+//					$teamHome->name = $item['teamHome'];
+//					$teamHome->slug = str_slug($item['teamHome']);
+//					$teamHome->saveOrFail();
+//				}
+//				$match->teamHome_id = $teamHome->id;
+//				$match->resHome = $item['resHome'];
+//
+//				$teamGuest = Club::where('name', $item['teamGuest'])->first();
+//				if (!$teamGuest) {
+//					$teamGuest = new Club();
+//					$teamGuest->country_id = $country_id;
+//					$teamGuest->league_id = $league_id;
+//					$teamGuest->name = $item['teamGuest'];
+//					$teamGuest->slug = str_slug($item['teamGuest']);
+//					$teamGuest->saveOrFail();
+//				}
+//				$match->teamGuest_id = $teamGuest->id;
+//				$match->resGuest = $item['resGuest'];
+//			}
+//			$match->saveOrFail();
+//			echo $match->id . "\n";
+//		}
+//			dd($match);
 		return $data;
 	}
 
@@ -168,11 +183,11 @@ class GrabberController extends Controller
 			$client = new Client();
 			$data = array();
 
-			if(is_string($param)){
+			if (is_string($param)) {
 //				$page_url = "http://laravel-dev.local/blabla.html";
 				$page = $client->request('GET', $param);
 				$frameSrc = $page->filter('.full-story iframe')->eq(0)->attr('src');
-			}elseif(is_int($param)){
+			} elseif (is_int($param)) {
 				$frameSrc = "http://mnogosporta.pro/engine/modules/staticxfwin.php?id=" . $param;
 			}
 
