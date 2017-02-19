@@ -90,7 +90,8 @@ class Club extends Section
 					->setLoadOptionsQueryPreparer(function($item, $query) {
 						return $query->where('country_id', $item->getDependValue('country_id'));
 					})
-					->setDisplay('name')
+					->setDisplay('name'),
+				AdminFormElement::multiselect('leagues', 'League', \App\Models\League::class)->setDisplay('name'),
 			],
 			[
 				AdminFormElement::text('city', 'City'),

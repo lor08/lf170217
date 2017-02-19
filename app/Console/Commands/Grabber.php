@@ -19,7 +19,8 @@ class Grabber extends Command
     						{league_id : ID league on site}
     						{year_id : ID year on site}
     						{country_idx : Country slug on grabbing site}
-    						{league_idx : ID league on grabbing site}';
+    						{league_idx : ID league on grabbing site}
+    						{type? : Type on match:calendar(is default match of league), playoff, group, preliminary}';
 
     /**
      * The console command description.
@@ -48,38 +49,60 @@ class Grabber extends Command
      */
     public function handle()
     {
+//    	exit();
 //		$arguments = $this->arguments();
 		$country_id = $this->argument('country_id');
 		$league_id = $this->argument('league_id');
 		$year_id = $this->argument('year_id');
 		$T_CODE = $this->argument('country_idx');
 		$T_ID = $this->argument('league_idx');
+		$type = "calendar" . $this->argument('type');
 
 		$client = new Client();
 		$data = array();
-		$page = $client->request('GET', 'https://www.championat.com/football/' . $T_CODE . '/' . $T_ID . '/calendar.html');
+		$page = $client->request('GET', 'https://www.championat.com/football/' . $T_CODE . '/' . $T_ID . '/'.$type.'.html');
 		$table = $page->filter('.page__block.sport');
 		$count_data = $table->filter('tbody tr')->count();
 		$this->line("Grabbing data:");
 		$bar = $this->output->createProgressBar( $count_data );
 		$table->filter('tbody tr')->each(function ($stroka) use ($client, &$data, $bar) {
-			$resHome = (int)$stroka->filter('.sport__calendar__table__result a span')->first()->text();
-			$resGuest = (int)$stroka->filter('.sport__calendar__table__result a span')->last()->text();
-			$date = explode(", ", trim($stroka->filter('.sport__calendar__table__date')->text()));
-			if (isset($date[1]) and $date[1] == "пер."){
-				$date = new \DateTime($date[0]);
-			} else {
-				$date = new \DateTime(trim($stroka->filter('.sport__calendar__table__date')->text()));
+			$teamHome 	= $stroka->filter('.sport__calendar__table__teams a')->first();
+			$teamHome	= $teamHome->count() ? $teamHome->text() : null;
+			$teamGuest 	= $stroka->filter('.sport__calendar__table__teams a')->last();
+			$teamGuest	= $teamGuest->count() ? $teamGuest->text() : null;
+			$dateNode 	= $stroka->filter('.sport__calendar__table__date');
+
+			$tur 		= $stroka->filter('.sport__calendar__table__tour');
+			$tur		= $tur->count() ? $tur->text() : null;
+			$group 		= $stroka->filter('.sport__calendar__table__group');
+			$group		= $group->count() ? $group->text() : null;
+
+			$resHome 	= $stroka->filter('.sport__calendar__table__result a span')->first();
+			$resHome	= $resHome->count() ? $resHome->text() : null;
+			$resGuest 	= $stroka->filter('.sport__calendar__table__result a span')->last();
+			$resGuest	= $resGuest->count() ? $resGuest->text() : null;
+
+			if (!$teamHome and !$teamGuest){
+				return false;
+			}
+
+			if ($dateNode->count()){
+				$date = explode(", ", trim($dateNode->text()));
+				if (isset($date[1]) and $date[1] == "пер."){
+					$date = new \DateTime($date[0]);
+				} else {
+					$date = new \DateTime(trim($dateNode->text()));
+				}
 			}
 			$data[] = array(
-				'tur' => $stroka->filter('.sport__calendar__table__tour')->text(),
-				'datetime' => $date->format('Y-m-d H:i'),
-				'teamHome' => $stroka->filter('.sport__calendar__table__teams a')->first()->text(),
-				'teamGuest' => $stroka->filter('.sport__calendar__table__teams a')->last()->text(),
-				'resHome' => $stroka->filter('.sport__calendar__table__result a span')->first()->text(),
-				'resGuest' => $stroka->filter('.sport__calendar__table__result a span')->last()->text(),
-				'resTotalHome' => $resHome == $resGuest ? "н" : ($resHome > $resGuest ? "в" : "п"),
-				'resTotalGuest' => $resHome == $resGuest ? "н" : ($resHome < $resGuest ? "в" : "п"),
+				'stage' => $group ? trim($group) : trim($tur),
+				'datetime' => isset($date) ? $date->format('Y-m-d H:i') : null,
+				'teamHome' => trim($teamHome),
+				'teamGuest' => trim($teamGuest),
+				'resHome' => trim($resHome),
+				'resGuest' => trim($resGuest),
+//				'resTotalHome' => $resHome == $resGuest ? "н" : ($resHome > $resGuest ? "в" : "п"),
+//				'resTotalGuest' => $resHome == $resGuest ? "н" : ($resHome < $resGuest ? "в" : "п"),
 			);
 
 			$bar->advance();
@@ -99,7 +122,7 @@ class Grabber extends Command
 				$match = new Match();
 				$match->league_id = $league_id;
 				$match->year_id = $year_id;
-				$match->stage = $item['tur'];
+				$match->stage = $item['stage'];
 				$match->datetime = $item['datetime'];
 				$match->unstring = $unstring;
 
