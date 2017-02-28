@@ -17,8 +17,9 @@ Route::get('/', function () {
 Route::any('/grabber/{param1?}/{param2?}/{param3?}', 'GrabberController@index')->name('grabber');
 
 Route::get('test', function (){
-	$match = App\Models\Match::where('id', 1)->with('league', 'teamHome')->get();
+//	$match = App\Models\Match::where('id', 1)->with('league', 'teamHome')->get();
+//	$routeCollection = Route::getRoutes()->getRoutesByMethod();
 
 
-	dd($match);
+//	dd($routeCollection);
 });

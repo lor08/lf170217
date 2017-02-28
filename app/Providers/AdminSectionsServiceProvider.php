@@ -12,6 +12,7 @@ use App\Models\LeagueYear;
 use App\Models\Club;
 use App\Models\Match;
 use App\Models\Chanel;
+use App\Models\File;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		Club::class => 'App\Admin\Sections\Club',
 		Match::class => 'App\Admin\Sections\Match',
 		Chanel::class => 'App\Admin\Sections\Chanel',
+		File::class => 'App\Admin\Sections\File',
 	];
 
 	/**
@@ -58,7 +60,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
 					(new Page(LeagueYear::class))->setPriority(100)->setTitle('Справочник годов'),
 				]
 			],
-			(new Page(User::class))->setPriority(110)->setTitle('Грабберы'),
+			(new Page(File::class))->setPriority(110)->setTitle('Зыгрузки'),
+			(new Page(User::class))->setPriority(120)->setTitle('Грабберы'),
 		]);
 	}
 
