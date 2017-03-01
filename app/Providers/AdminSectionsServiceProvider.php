@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Load;
+use App\Models\LoadCategory;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 use SleepingOwl\Admin\Navigation\Page;
 use PackageManager;
@@ -28,7 +31,10 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		Club::class => 'App\Admin\Sections\Club',
 		Match::class => 'App\Admin\Sections\Match',
 		Chanel::class => 'App\Admin\Sections\Chanel',
+		Load::class => 'App\Admin\Sections\Load',
 		File::class => 'App\Admin\Sections\File',
+		Category::class => 'App\Admin\Sections\Category',
+		LoadCategory::class => 'App\Admin\Sections\LoadCategory',
 	];
 
 	/**
@@ -60,8 +66,17 @@ class AdminSectionsServiceProvider extends ServiceProvider
 					(new Page(LeagueYear::class))->setPriority(100)->setTitle('Справочник годов'),
 				]
 			],
-			(new Page(File::class))->setPriority(110)->setTitle('Зыгрузки'),
-			(new Page(User::class))->setPriority(120)->setTitle('Грабберы'),
+			[
+				'title' => 'Категории',
+				'icon' => 'fa fa-group',
+				'priority' => 110,
+				'pages' => [
+					(new Page(Category::class))->setPriority(0)->setTitle('Все'),
+					(new Page(LoadCategory::class))->setPriority(10)->setTitle('Загрузки'),
+				]
+			],
+			(new Page(Load::class))->setPriority(120)->setTitle('Зыгрузки'),
+			(new Page(User::class))->setPriority(130)->setTitle('Грабберы'),
 		]);
 	}
 

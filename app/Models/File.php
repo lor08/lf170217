@@ -7,24 +7,9 @@ use Request;
 
 class File extends Model
 {
-	protected $fillable = [
-		'name', 'slug', 'file', 'category_id', 'status',
-	];
 
-	public function setSlugAttribute($slug)
+	public function scopeWithLoads($query, $onlineId)
 	{
-		if ($slug == '') $slug = str_slug(Request::get('name'), '_');
-		if ($cat = self::where('slug', $slug)->first()) {
-			$idmax = self::max('id') + 1;
-			if (isset($this->attributes['id'])) {
-				if ($this->attributes['id'] != $cat->id) {
-					$slug = $slug . '_' . ++$idmax;
-				}
-			} else {
-				if (self::where('slug', $slug)->count() > 0)
-					$slug = $slug . '_' . ++$idmax;
-			}
-		}
-		$this->attributes['slug'] = $slug;
+		return $query->where('load_id', $onlineId);
 	}
 }
