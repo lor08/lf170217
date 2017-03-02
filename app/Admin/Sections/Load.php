@@ -65,6 +65,7 @@ class Load extends Section
 	 */
 	public function onEdit($id)
 	{
+		$cat_id = config('liga-fifa');
 		$tabs = AdminDisplay::tabbed();
 		$tabs->setTabs(function () use ($id) {
 			$tabs = [];
@@ -77,10 +78,10 @@ class Load extends Section
 							AdminFormElement::text('status', 'Status')->setDefaultValue(0),
 							AdminFormElement::multiselect('categories', 'Category', \App\Models\Category::class)
 								->setDisplay('name')
-								->setLoadOptionsQueryPreparer(function ($element, $query) {
+								->setLoadOptionsQueryPreparer(function ($element, $query) use ($cat_id) {
 									return $query
-										->where('id', 6)
-										->orWhere('parent_id', 6);
+										->where('id', $cat_id['CategoryIdDownloads'])
+										->orWhere('parent_id', $cat_id['CategoryIdDownloads']);
 								}),
 //							AdminFormElement::select('category_id', 'Category', \App\Models\Country::class)->setDisplay('name'),
 //							AdminFormElement::text('category_id', 'Category'),

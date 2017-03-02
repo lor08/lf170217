@@ -6,6 +6,8 @@ use AdminSection;
 use App\Models\Category;
 use App\Models\Load;
 use App\Models\LoadCategory;
+use App\Models\Video;
+use App\Models\VideoCategory;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 use SleepingOwl\Admin\Navigation\Page;
 use PackageManager;
@@ -36,6 +38,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		File::class => 'App\Admin\Sections\File',
 		Category::class => 'App\Admin\Sections\Category',
 		LoadCategory::class => 'App\Admin\Sections\LoadCategory',
+		Video::class => 'App\Admin\Sections\Video',
+		VideoCategory::class => 'App\Admin\Sections\VideoCategory',
 	];
 
 	/**
@@ -74,6 +78,15 @@ class AdminSectionsServiceProvider extends ServiceProvider
 				'pages' => [
 					(new Page(Load::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
 					(new Page(LoadCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
+				]
+			],
+			[
+				'title' => 'Видео',
+				'icon' => 'fa fa-video-camera',
+				'priority' => 110,
+				'pages' => [
+					(new Page(Video::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
+					(new Page(VideoCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
 				]
 			],
 			(new Page(User::class))->setPriority(130)->setTitle('Грабберы'),

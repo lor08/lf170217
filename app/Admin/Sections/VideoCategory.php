@@ -20,7 +20,7 @@ use AdminForm;
  *
  * @see http://sleepingowladmin.ru/docs/model_configuration_section
  */
-class LoadCategory extends Section
+class VideoCategory extends Section
 {
     /**
      * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
@@ -32,12 +32,12 @@ class LoadCategory extends Section
     /**
      * @var string
      */
-    protected $title = "Категории Загрузок";
+    protected $title = "Категории Видео";
 
     /**
      * @var string
      */
-    protected $alias = "loads/categories";
+    protected $alias = "videos/categories";
 
     /**
      * @return DisplayInterface
@@ -45,7 +45,7 @@ class LoadCategory extends Section
 	public function onDisplay()
 	{
 		$cat_id = config('liga-fifa');
-		return AdminDisplay::tree()->setValue('name')->setRootParentId($cat_id['CategoryIdDownloads']);
+		return AdminDisplay::tree()->setValue('name')->setRootParentId($cat_id['CategoryIdVideo']);
 	}
 
 	/**

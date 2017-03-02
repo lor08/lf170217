@@ -23,5 +23,11 @@ class CategorySeeder extends Seeder
 		);
 		$node = new Category($attributes);
 		$node->save();
+		$attributes = array(
+			'name' => "Видео",
+			'slug' => "video",
+		);
+		$node = new Category($attributes);
+		$node->save();
     }
 }
