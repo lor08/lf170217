@@ -37,18 +37,14 @@ class LoadCategory extends Section
     /**
      * @var string
      */
-    protected $alias = "categories/loads";
+    protected $alias = "loads/categories";
 
     /**
      * @return DisplayInterface
      */
 	public function onDisplay()
 	{
-		return AdminDisplay::tree()
-			->setValue('name')
-			->setApply(function ($query) {
-				$query->where('parent_id', 6);
-			});
+		return AdminDisplay::tree()->setValue('name')->setRootParentId(1);
 	}
 
 	/**

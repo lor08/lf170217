@@ -37,7 +37,7 @@ class Category extends Section
 	/**
 	 * @var string
 	 */
-	protected $alias = "categories/all";
+	protected $alias = "categories";
 
 	/**
 	 * @return DisplayInterface

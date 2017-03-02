@@ -52,7 +52,8 @@ class Category extends Model
 	{
 		$slugCollections = $this->getAncestors()->pluck('slug')->toArray();
 
-		$slug = str_slug(Request::get('name'), '_');
+		if ($slug == '') $slug = str_slug(Request::get('name'), '_');
+//		$slug = str_slug(Request::get('name'), '_');
 		if ($cat = self::where('slug', $slug)->first()) {
 			$idmax = self::max('id') + 1;
 			if (isset($this->attributes['id'])) {
@@ -67,7 +68,7 @@ class Category extends Model
 
 		$slugCollections[] = $slug;
 		$newSlug = implode("/", $slugCollections);
-		$this->attributes['slug'] = $newSlug;
+		$this->attributes['slug'] = strlen($newSlug) ? $newSlug : $slug;
 	}
 
 	public static function boot()

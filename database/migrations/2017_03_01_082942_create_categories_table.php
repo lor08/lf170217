@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
 			$table->increments('id');
 			$table->string('name');
 			$table->string('slug')->unique();
+			$table->integer('order')->unsigned()->default(0);
 			NestedSet::columns($table);
 			$table->timestamps();
 		});

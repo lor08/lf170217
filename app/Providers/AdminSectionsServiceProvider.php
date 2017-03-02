@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use AdminSection;
 use App\Models\Category;
 use App\Models\Load;
 use App\Models\LoadCategory;
@@ -67,20 +68,33 @@ class AdminSectionsServiceProvider extends ServiceProvider
 				]
 			],
 			[
-				'title' => 'Категории',
-				'icon' => 'fa fa-group',
+				'title' => 'Загрузки',
+				'icon' => 'fa fa-download',
 				'priority' => 110,
 				'pages' => [
-					(new Page(Category::class))->setPriority(0)->setTitle('Все'),
-					(new Page(LoadCategory::class))->setPriority(10)->setTitle('Загрузки'),
+					(new Page(Load::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
+					(new Page(LoadCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
 				]
 			],
-			(new Page(Load::class))->setPriority(120)->setTitle('Зыгрузки'),
 			(new Page(User::class))->setPriority(130)->setTitle('Грабберы'),
+			[
+				'title' => 'Настройки',
+				'icon' => 'fa fa-cog',
+				'priority' => 1000,
+				'pages' => [
+					[
+						'title' => 'Глобальные настройки',
+						'icon' => 'fa fa-cog',
+						'url' => route('admin.setting'),
+						'priority' => 0,
+					],
+					(new Page(Category::class))->setPriority(10)->setTitle('Дерево категорий')->setIcon('fa fa-folder'),
+				]
+			],
 		]);
 	}
 
-	private function registerNRoutes()
+	private function registerNRoutes(	)
 	{
 		$this->app['router']->group(
 			[
@@ -88,15 +102,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
 				'middleware' => config('sleeping_owl.middleware')
 			],
 			function ($router) {
-				$router->get(
-					'',
-					[
-						'as' => 'admin.dashboard',
-						function () {
-						$content = 'Define your dashboard here.';
-						return AdminSection::view($content, 'Dashboard');
-					}
-					]);
+				$router->get('', ['as' => 'admin.dashboard']);
+				$router->get('setting', ['as' => 'admin.setting']);
 			});
 	}
 
