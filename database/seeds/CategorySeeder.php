@@ -27,7 +27,19 @@ class CategorySeeder extends Seeder
 			'name' => "Видео",
 			'slug' => "video",
 		);
-		$node = new Category($attributes);
+		$parent = new Category($attributes);
+		$parent->save();
+		$attributes = array(
+			'name' => "Видео обзоры",
+			'slug' => "reviews",
+		);
+		$node = Category::create($attributes, $parent);
 		$node->save();
-    }
+		$attributes = array(
+			'name' => "Записи матчей",
+			'slug' => str_slug("Записи матчей"),
+		);
+		$node = Category::create($attributes, $parent);
+		$node->save();
+	}
 }

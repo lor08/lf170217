@@ -11,9 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-	return view('welcome');
-});
+Route::get('/', "FrontController@getHome")->name("home");
+Route::get('news', "FrontController@getNews")->name("news");
+Route::get('videos', "FrontController@getVideo")->name("videos");
+Route::get('downloads', "FrontController@getLoads")->name("loads");
+Route::get('material', "FrontController@getMaterial")->name("material");
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::any('/grabber/{param1?}/{param2?}/{param3?}', 'GrabberController@index')->name('grabber');
 
 Route::get('test', function (){
