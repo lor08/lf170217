@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use AdminSection;
+use App\Models\Category;
+use App\Models\Load;
+use App\Models\LoadCategory;
+use App\Models\Video;
+use App\Models\VideoCategory;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 use SleepingOwl\Admin\Navigation\Page;
 use PackageManager;
@@ -12,6 +18,7 @@ use App\Models\LeagueYear;
 use App\Models\Club;
 use App\Models\Match;
 use App\Models\Chanel;
+use App\Models\File;
 
 class AdminSectionsServiceProvider extends ServiceProvider
 {
@@ -27,6 +34,12 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		Club::class => 'App\Admin\Sections\Club',
 		Match::class => 'App\Admin\Sections\Match',
 		Chanel::class => 'App\Admin\Sections\Chanel',
+		Load::class => 'App\Admin\Sections\Load',
+		File::class => 'App\Admin\Sections\File',
+		Category::class => 'App\Admin\Sections\Category',
+		LoadCategory::class => 'App\Admin\Sections\LoadCategory',
+		Video::class => 'App\Admin\Sections\Video',
+		VideoCategory::class => 'App\Admin\Sections\VideoCategory',
 	];
 
 	/**
@@ -58,11 +71,43 @@ class AdminSectionsServiceProvider extends ServiceProvider
 					(new Page(LeagueYear::class))->setPriority(100)->setTitle('Справочник годов'),
 				]
 			],
-			(new Page(User::class))->setPriority(110)->setTitle('Грабберы'),
+			[
+				'title' => 'Загрузки',
+				'icon' => 'fa fa-download',
+				'priority' => 110,
+				'pages' => [
+					(new Page(Load::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
+					(new Page(LoadCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
+				]
+			],
+			[
+				'title' => 'Видео',
+				'icon' => 'fa fa-video-camera',
+				'priority' => 110,
+				'pages' => [
+					(new Page(Video::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
+					(new Page(VideoCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
+				]
+			],
+			(new Page(User::class))->setPriority(130)->setTitle('Грабберы'),
+			[
+				'title' => 'Настройки',
+				'icon' => 'fa fa-cog',
+				'priority' => 1000,
+				'pages' => [
+					[
+						'title' => 'Глобальные настройки',
+						'icon' => 'fa fa-cog',
+						'url' => route('admin.setting'),
+						'priority' => 0,
+					],
+					(new Page(Category::class))->setPriority(10)->setTitle('Дерево категорий')->setIcon('fa fa-folder'),
+				]
+			],
 		]);
 	}
 
-	private function registerNRoutes()
+	private function registerNRoutes(	)
 	{
 		$this->app['router']->group(
 			[
@@ -70,15 +115,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
 				'middleware' => config('sleeping_owl.middleware')
 			],
 			function ($router) {
-				$router->get(
-					'',
-					[
-						'as' => 'admin.dashboard',
-						function () {
-						$content = 'Define your dashboard here.';
-						return AdminSection::view($content, 'Dashboard');
-					}
-					]);
+				$router->get('', ['as' => 'admin.dashboard']);
+				$router->get('setting', ['as' => 'admin.setting']);
 			});
 	}
 

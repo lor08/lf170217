@@ -10,6 +10,9 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelrus/sleepingowl": "dev-feature/5.4",
+        "barryvdh/laravel-debugbar": "^2.3",
+        "cartalyst/sentinel": "^2.0",
+        "kalnoy/nestedset": "^4.2",
         "guzzlehttp/guzzle": "~4.0",
         "fabpot/goutte": "*"
     },
