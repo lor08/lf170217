@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Goutte\Client;
 use App\Models\Match;
 use App\Models\Club;
+use App\Models\Country;
 
 class Grabber extends Command
 {
@@ -126,7 +127,28 @@ class Grabber extends Command
 				$match->datetime = $item['datetime'];
 				$match->unstring = $unstring;
 
-				$teamHome = Club::where('name', $item['teamHome'])->first();
+				$pattern = '/\(.*\)/u';
+
+				if (preg_match($pattern, $item['teamHome'], $matches)){
+					$countryTmp = str_replace(array('(', ')'), '', $matches[0]);
+					$countryHome = Country::where('name', $countryTmp)->first();
+					if (!$countryHome){
+						$countryHome = new Country();
+						$countryHome->name = $countryTmp;
+						$countryHome->slug = str_slug($countryTmp);
+						$countryHome->saveOrFail();
+					}
+					$country_id_t = $countryHome->id;
+
+					$homeTmp = trim( str_replace($matches[0], '', $item['teamHome']) );
+					$teamHome = Club::where('name', $homeTmp)->with('country')->first();
+					if ($country_id_t != $teamHome->country->id){
+						$teamHome = false;
+					}
+				} else {
+					$teamHome = Club::where('name', $item['teamHome'])->first();
+				}
+//				$teamHome = Club::where('name', $item['teamHome'])->with('country')->first();
 				if (!$teamHome) {
 					$teamHome = new Club();
 					$teamHome->country_id = $country_id;
@@ -138,10 +160,29 @@ class Grabber extends Command
 				$match->teamHome_id = $teamHome->id;
 				$match->resHome = $item['resHome'];
 
-				$teamGuest = Club::where('name', $item['teamGuest'])->first();
+				if (preg_match($pattern, $item['teamGuest'], $matches)){
+					$countryTmp = str_replace(array('(', ')'), '', $matches[0]);
+					$countryGuest = Country::where('name', $countryTmp)->first();
+					if (!$countryGuest){
+						$countryGuest = new Country();
+						$countryGuest->name = $countryTmp;
+						$countryGuest->slug = str_slug($countryTmp);
+						$countryGuest->saveOrFail();
+					}
+					$country_id_t = $countryGuest->id;
+
+					$guestTmp = trim( str_replace($matches[0], '', $item['teamGuest']) );
+					$teamGuest = Club::where('name', $guestTmp)->with('country')->first();
+					if ($country_id_t != $teamGuest->country->id){
+						$teamGuest = false;
+					}
+				} else {
+					$teamGuest = Club::where('name', $item['teamGuest'])->first();
+				}
+//				$teamGuest = Club::where('name', $item['teamGuest'])->with('country')->first();
 				if (!$teamGuest) {
 					$teamGuest = new Club();
-					$teamGuest->country_id = $country_id;
+					$teamHome->country_id = $country_id;
 					$teamGuest->league_id = $league_id;
 					$teamGuest->name = $item['teamGuest'];
 					$teamGuest->slug = str_slug($item['teamGuest']);

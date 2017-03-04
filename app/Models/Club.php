@@ -19,6 +19,10 @@ class Club extends Model
 	{
 		return $this->belongsTo(League::class);
 	}
+	public function country()
+	{
+		return $this->belongsTo(Country::class);
+	}
 	public function leagues()
 	{
 		return $this->belongsToMany(League::class);
