@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'title' => 'Sleeping Owl administrator',
+    'title' => 'LIGA-FIFA Admin panel',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'url_prefix' => 'admin',
+    'url_prefix' => 'dashboard',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => ['web', 'admin'],
 
     /*
     |--------------------------------------------------------------------------
@@ -173,6 +173,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'HTML' => Collective\Html\HtmlFacade::class,
         'WysiwygManager' => SleepingOwl\Admin\Facades\WysiwygManager::class,
+		'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'MessagesStack' => SleepingOwl\Admin\Facades\MessageStack::class,
 
         // Presenters

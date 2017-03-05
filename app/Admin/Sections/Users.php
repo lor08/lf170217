@@ -30,7 +30,7 @@ class Users extends Section
 	/**
 	 * @var string
 	 */
-	protected $title;
+	protected $title = "Пользователи";
 
 	/**
 	 * @var string

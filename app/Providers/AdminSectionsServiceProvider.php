@@ -6,12 +6,16 @@ use AdminSection;
 use App\Models\Category;
 use App\Models\Load;
 use App\Models\LoadCategory;
+use App\Models\News;
+use App\Models\NewsCategory;
+use App\Models\Permit;
+use App\Models\Role;
+use App\Models\User;
 use App\Models\Video;
 use App\Models\VideoCategory;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 use SleepingOwl\Admin\Navigation\Page;
 use PackageManager;
-use App\User;
 use App\Models\Country;
 use App\Models\League;
 use App\Models\LeagueYear;
@@ -40,6 +44,11 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		LoadCategory::class => 'App\Admin\Sections\LoadCategory',
 		Video::class => 'App\Admin\Sections\Video',
 		VideoCategory::class => 'App\Admin\Sections\VideoCategory',
+		News::class => 'App\Admin\Sections\News',
+		NewsCategory::class => 'App\Admin\Sections\NewsCategory',
+		Permit::class => 'App\Admin\Sections\Permit',
+		Role::class => 'App\Admin\Sections\Role',
+		User::class => 'App\Admin\Sections\User',
 	];
 
 	/**
@@ -89,6 +98,25 @@ class AdminSectionsServiceProvider extends ServiceProvider
 					(new Page(VideoCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
 				]
 			],
+			[
+				'title' => 'Новости',
+				'icon' => 'fa fa-newspaper-o',
+				'priority' => 120,
+				'pages' => [
+					(new Page(News::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
+					(new Page(NewsCategory::class))->setPriority(10)->setTitle('Категории')->setIcon('fa fa-folder'),
+				]
+			],
+			[
+				'title' => 'Пользователи',
+				'icon' => 'fa fa-user',
+				'priority' => 130,
+				'pages' => [
+					(new Page(User::class))->setPriority(0)->setTitle('Список')->setIcon('fa fa-list'),
+					(new Page(Role::class))->setPriority(10)->setTitle('Роли')->setIcon('fa fa-users'),
+					(new Page(Permit::class))->setPriority(20)->setTitle('Права')->setIcon('fa fa-user-secret'),
+				]
+			],
 			(new Page(User::class))->setPriority(130)->setTitle('Грабберы'),
 			[
 				'title' => 'Настройки',
@@ -104,6 +132,12 @@ class AdminSectionsServiceProvider extends ServiceProvider
 					(new Page(Category::class))->setPriority(10)->setTitle('Дерево категорий')->setIcon('fa fa-folder'),
 				]
 			],
+			[
+				'title' => 'Выход',
+				'icon' => 'fa fa-sign-out',
+				'priority' => 10000,
+				'url' => url('/logout')
+			]
 		]);
 	}
 

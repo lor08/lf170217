@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\News;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,7 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+		$this->call(RoleSeeder::class);
 		$this->call(CountrySeeder::class);
 		$this->call(CategorySeeder::class);
+
+		News::truncate();
+		factory(News::class, 100)->create();
     }
 }

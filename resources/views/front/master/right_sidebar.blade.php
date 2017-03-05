@@ -4,6 +4,8 @@
 			<h4 class="card-title">Онлайн трансляции</h4>
 		</div>
 		<div class="card-body">
+			<a href="/dashboard" target="_blank">Админка</a>
+			<br>
 			<a href="#" onclick="toastr.info('message info','title', {progressBar: true}); return false;">Тестовая всплывашка info</a>
 			<br>
 			<a href="#" onclick="toastr.success('message success','title', {progressBar: true}); return false;">Тестовая всплывашка success</a>
