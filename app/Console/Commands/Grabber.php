@@ -128,7 +128,8 @@ class Grabber extends Command
 				$match->unstring = $unstring;
 
 				$pattern = '/\(.*\)/u';
-
+//todo: что-то не так с припиской к стране в ЛЧ
+				$country_id_t = false;
 				if (preg_match($pattern, $item['teamHome'], $matches)){
 					$countryTmp = str_replace(array('(', ')'), '', $matches[0]);
 					$countryHome = Country::where('name', $countryTmp)->first();
@@ -142,7 +143,7 @@ class Grabber extends Command
 
 					$homeTmp = trim( str_replace($matches[0], '', $item['teamHome']) );
 					$teamHome = Club::where('name', $homeTmp)->with('country')->first();
-					if ($country_id_t != $teamHome->country->id){
+					if (isset($teamHome) and $country_id_t != $teamHome->country->id){
 						$teamHome = false;
 					}
 				} else {
@@ -151,15 +152,16 @@ class Grabber extends Command
 //				$teamHome = Club::where('name', $item['teamHome'])->with('country')->first();
 				if (!$teamHome) {
 					$teamHome = new Club();
-					$teamHome->country_id = $country_id;
+					$teamHome->country_id = $country_id_t ? $country_id_t : $country_id;
 					$teamHome->league_id = $league_id;
-					$teamHome->name = $item['teamHome'];
-					$teamHome->slug = str_slug($item['teamHome']);
+					$teamHome->name = isset($homeTmp) ? $homeTmp : $item['teamHome'];
+					$teamHome->slug = str_slug($teamHome->name);
 					$teamHome->saveOrFail();
 				}
 				$match->teamHome_id = $teamHome->id;
 				$match->resHome = $item['resHome'];
 
+				$country_id_t = false;
 				if (preg_match($pattern, $item['teamGuest'], $matches)){
 					$countryTmp = str_replace(array('(', ')'), '', $matches[0]);
 					$countryGuest = Country::where('name', $countryTmp)->first();
@@ -173,7 +175,7 @@ class Grabber extends Command
 
 					$guestTmp = trim( str_replace($matches[0], '', $item['teamGuest']) );
 					$teamGuest = Club::where('name', $guestTmp)->with('country')->first();
-					if ($country_id_t != $teamGuest->country->id){
+					if (isset($teamGuest) and $country_id_t != $teamGuest->country->id){
 						$teamGuest = false;
 					}
 				} else {
@@ -182,15 +184,16 @@ class Grabber extends Command
 //				$teamGuest = Club::where('name', $item['teamGuest'])->with('country')->first();
 				if (!$teamGuest) {
 					$teamGuest = new Club();
-					$teamHome->country_id = $country_id;
+					$teamGuest->country_id = $country_id_t ? $country_id_t : $country_id;
 					$teamGuest->league_id = $league_id;
-					$teamGuest->name = $item['teamGuest'];
-					$teamGuest->slug = str_slug($item['teamGuest']);
+					$teamGuest->name = isset($guestTmp) ? $guestTmp : $item['teamGuest'];
+					$teamGuest->slug = str_slug($teamGuest->name);
 					$teamGuest->saveOrFail();
 				}
 				$match->teamGuest_id = $teamGuest->id;
 				$match->resGuest = $item['resGuest'];
 			}
+			$match->slug = str_slug("{$teamHome->slug}-{$teamGuest->slug}");
 			$match->saveOrFail();
 			$bar->advance();
 		}

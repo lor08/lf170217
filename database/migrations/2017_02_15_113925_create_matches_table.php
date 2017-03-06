@@ -16,6 +16,8 @@ class CreateMatchesTable extends Migration
         Schema::create('matches', function (Blueprint $table) {
             $table->increments('id');
 
+			$table->string('slug')->unique();
+
 			$table->integer('league_id')->unsigned();
 			$table->integer('year_id')->unsigned();
 

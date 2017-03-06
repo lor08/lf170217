@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Match;
 use App\Models\News;
 use Cache;
 use Request;
@@ -69,6 +70,35 @@ class FrontController extends Controller
 			$data['breadcrumbs'][] = array('NAME' => $item->name);
 			return view('front.news.item', $data);
 		}
+		return abort(404, "Page not found");
+	}
+
+	public function getOnlineItem($slug)
+	{
+		$slug = explode("/", $slug);
+		$slug = array_pop($slug);
+		$item = Cache::remember(Match::class . "_$slug", config('liga-fifa.cacheTime'), function () use ($slug) {
+			return Match::where([
+				['slug', '=', $slug],
+//				['show', '=', 1],
+			])->with('league', 'teamHome', 'teamGuest', 'channels', 'year')->first();
+		});
+		if ($item) {
+			$title = $item->teamHome->name . "-" . $item->teamGuest->name;
+			$data = array(
+				'title' => $title,
+				'description' => "Описание",
+				'item' => $item
+			);
+			$data['breadcrumbs'] = array(
+				array('NAME' => "Главная", 'URL' => "/"),
+				array('NAME' => "Трансляции", 'URL' => "/online"),
+				array('NAME' => $item->league->name, 'URL' => "/online/" . $item->league->slug),
+			);
+			$data['breadcrumbs'][] = array('NAME' => $title);
+			return view('front.online.item', $data);
+		}
+//		dd($item);
 		return abort(404, "Page not found");
 	}
 

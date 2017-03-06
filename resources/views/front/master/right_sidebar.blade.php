@@ -1,3 +1,4 @@
+{{--{{dd($online_match)}}--}}
 <div class="col-md-3 col-big-2" id="rightSidebar">
 	<div class="card hidden-xs hidden-sm">
 		<div class="card-header">
@@ -14,7 +15,17 @@
 			<br>
 			<a href="#" onclick="toastr.error('message error','title', {progressBar: true}); return false;">Тестовая всплывашка error</a>
 			<br>
-			<strong>Сегодня</strong>
+			@foreach($online_match as $type => $dateMatch)
+				<strong>@lang('messages.' . $type)</strong>
+				@foreach($dateMatch as $key => $match)
+					<div class="">
+						<span class="flag-icon flag-icon-gb"></span>
+						<span class="badge @if($match->isOnline) badge-success @else badge-outline-info @endif">{{$match->startTime}}</span>
+						<a class="link-muted" href="{{route('onlineItem', $match->slug)}}">{{$match->teamHome->name}} - {{$match->teamGuest->name}}</a>
+					</div>
+				@endforeach
+			@endforeach
+{{--			<strong>Сегодня</strong>
 			<div class=""><span class="flag-icon flag-icon-gb"></span> <span
 						class="badge badge-outline-info">22:45</span> <a class="link-muted" href="#">Борнмут
 					- Кристал Пэлас</a></div>
@@ -36,7 +47,7 @@
 					- Кристал Пэлас</a></div>
 			<div class=""><span class="flag-icon flag-icon-gb"></span> <span
 						class="badge badge-success">22:45</span> <a class="link-muted" href="#">Арсенал -
-					Уотфорд</a></div>
+					Уотфорд</a></div>--}}
 		</div>
 	</div>
 	<div class="card">

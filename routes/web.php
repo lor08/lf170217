@@ -16,6 +16,8 @@ Route::get('/', "FrontController@getHome")->name("home");
 Route::get('news/{slug}.htm', 'FrontController@getNewsItem')->where('slug', '[a-zA-Z0-9\-/_]+')->name('newsItem');
 Route::get('news/{path?}', "FrontController@getNews")->where('path', '[a-zA-Z0-9\-/_]+')->name("news");
 
+Route::get('online/{slug}.htm', 'FrontController@getOnlineItem')->where('slug', '[a-zA-Z0-9\-/_]+')->name('onlineItem');
+
 Route::get('videos', "FrontController@getVideo")->name("videos");
 Route::get('downloads', "FrontController@getLoads")->name("loads");
 Route::get('material', "FrontController@getMaterial")->name("material");

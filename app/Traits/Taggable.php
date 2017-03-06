@@ -44,8 +44,9 @@ trait Taggable
 					$data[] = $item;
 				}
 			}
+//			dd($data);
 			$data = collect($data)->whereNotIn('id', $this->id)->unique('id')->values();
-			if ($data->count()){
+			if ($data->count() > 4){
 				return $data->random(4);
 			} else return $data;
 

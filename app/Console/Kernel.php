@@ -31,16 +31,16 @@ class Kernel extends ConsoleKernel
 		$schedule->command('grabber:match 2 2 1 _england 1764')
 			->hourly()
 			->appendOutputTo($logPath);
-		$schedule->command('grabber:match 3 4 1 _spain 1782')
+		$schedule->command('grabber:match 3 3 1 _spain 1782')
 			->hourly()
 			->appendOutputTo($logPath);
-		$schedule->command('grabber:match 4 5 1 _italy 1780')
+		$schedule->command('grabber:match 4 4 1 _italy 1780')
 			->hourly()
 			->appendOutputTo($logPath);
-		$schedule->command('grabber:match 5 3 1 _germany 1778')
+		$schedule->command('grabber:match 5 5 1 _germany 1778')
 			->hourly()
 			->appendOutputTo($logPath);
-		$schedule->command('grabber:match 6 7 1 _france 1784')
+		$schedule->command('grabber:match 6 6 1 _france 1784')
 			->hourly()
 			->appendOutputTo($logPath);
 		$schedule->command('grabber:match 8 6 1 _ukraine 1972')
