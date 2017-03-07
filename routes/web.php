@@ -16,11 +16,17 @@ Route::get('/', "FrontController@getHome")->name("home");
 Route::get('news/{slug}.htm', 'FrontController@getNewsItem')->where('slug', '[a-zA-Z0-9\-/_]+')->name('newsItem');
 Route::get('news/{path?}', "FrontController@getNews")->where('path', '[a-zA-Z0-9\-/_]+')->name("news");
 
+Route::get('video/{slug}.htm', 'FrontController@getVideoItem')->where('slug', '[a-zA-Z0-9\-/_]+')->name('videoItem');
+Route::get('video/{path?}', "FrontController@getVideos")->where('path', '[a-zA-Z0-9\-/_]+')->name("video");
+
+Route::get('downloads/{slug}.htm', 'FrontController@getDownloadsItem')->where('slug', '[a-zA-Z0-9\-/_]+')->name('downloadsItem');
+Route::get('downloads/{path?}', "FrontController@getDownloads")->where('path', '[a-zA-Z0-9\-/_]+')->name("downloads");
+
 Route::get('online/{slug}.htm', 'FrontController@getOnlineItem')->where('slug', '[a-zA-Z0-9\-/_]+')->name('onlineItem');
 
-Route::get('videos', "FrontController@getVideo")->name("videos");
-Route::get('downloads', "FrontController@getLoads")->name("loads");
-Route::get('material', "FrontController@getMaterial")->name("material");
+//Route::get('videos', "FrontController@getVideo")->name("videos");
+//Route::get('downloads', "FrontController@getLoads")->name("loads");
+//Route::get('material', "FrontController@getMaterial")->name("material");
 
 Route::get('login', 'AuthController@login')->name("login");
 Route::post('login', 'AuthController@loginProcess');
@@ -69,19 +75,3 @@ Route::get('test', function (){
 	dd($matches);
 });
 
-/**
- * @param $group
- * @param $items
- * @param bool $update
- */
-function putConfig($group, $items, $update = true){
-	$config = config($group);
-	// Обновляем данные или вносим новые
-	if ($update){
-		foreach ($items as $key => $item) {
-			$config[$key] = $item;
-		}
-	} else $config = $items;
-	$path = config_path() . DIRECTORY_SEPARATOR . $group . ".php";
-	File::put($path, '<?php return ' . var_export($config, true) . ';');
-}

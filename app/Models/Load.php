@@ -3,16 +3,23 @@
 namespace App\Models;
 
 use App\Traits\Categorizable;
+use App\Traits\Taggable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Request;
 
 class Load extends Model
 {
-	use Categorizable;
+	use Categorizable, Taggable;
 
 	protected $fillable = [
 		'name', 'slug', 'file', 'category_id', 'status',
 	];
+
+	public function files()
+	{
+		return $this->hasMany(File::class);
+	}
 
 	public function setSlugAttribute($slug)
 	{
@@ -29,5 +36,17 @@ class Load extends Model
 			}
 		}
 		$this->attributes['slug'] = $slug;
+	}
+
+	public function getCreatedAttribute()
+	{
+//		$now = Carbon::parse($this->created_at)->addDay();
+//		$yesterday = Carbon::parse($this->created_at)->addDay(-1);
+//		if(Carbon::now()->between($now, $yesterday)){
+//			$data = Carbon::parse($this->created_at)->diffForHumans();
+//		}else{
+			$data = Carbon::parse($this->created_at)->formatLocalized('%e %b %Y');
+//		}
+		return $data;
 	}
 }

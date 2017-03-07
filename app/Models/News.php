@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Categorizable;
 use App\Traits\Taggable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Request;
@@ -35,5 +36,17 @@ class News extends Model
 			}
 		}
 		$this->attributes['slug'] = $slug;
+	}
+
+	public function getCreatedAttribute()
+	{
+		$now = Carbon::parse($this->created_at)->addDay();
+		$yesterday = Carbon::parse($this->created_at)->addDay(-1);
+		if(Carbon::now()->between($now, $yesterday)){
+			$data = Carbon::parse($this->created_at)->diffForHumans();
+		}else{
+			$data = Carbon::parse($this->created_at)->formatLocalized('%e %b %Y');
+		}
+		return $data;
 	}
 }

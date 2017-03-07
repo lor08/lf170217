@@ -14,7 +14,7 @@
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="title">
 	<meta property="og:description" content="description">
-	<meta property="og:image" content="http://themes.naksoid.com/elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">
+	{{--<meta property="og:image" content="http://themes.naksoid.com/elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">--}}
 	<meta name="twitter:card" content="summary">
 @endsection
 @section('content')
@@ -29,11 +29,8 @@
 				<div class="row gutter-xs">
 					<div class="col-md-12">
 						<div class="row gutter-xs">
-							<div class="col-sm-4 col-md-4">
-								<img class="img-responsive" src="{{url($item->detail_img)}}" alt="{{$item->name}}">
-							</div>
-							<div class="col-sm-8 col-md-8">
-								{!! $item->detail_text !!}
+							<div class="col-md-12 text-center">
+								{!! $item->detail_text or $item->detail !!}
 							</div>
 						</div>
 					</div>
@@ -55,12 +52,12 @@
 						<span class="icon icon-folder"></span>
 						@foreach($item->categories as $key => $category)
 							@unless($key == 0)/@endunless
-							<a href="{{route('news', $category->slug)}}">{{$category->name}}</a>
+							<a href="{{route('video', $category->slug)}}">{{$category->name}}</a>
 						@endforeach
 					@endunless
-					<span class="icon icon-calendar"></span> {{$item->created_at}}
+					<span class="icon icon-calendar"></span> {{$item->created}}
 					<span class="icon icon-eye"></span> {{$item->views}}
-					<span class="icon icon-comment"></span> 22
+					{{--<span class="icon icon-comment"></span> 22--}}
 				</small>
 			</div>
 		</div>
@@ -76,7 +73,7 @@
 								<div class="card">
 									<div class="card-body">
 										<h4 class="card-title fw-l">
-											<a class="link-muted" href="{{route('newsItem', $related->slug)}}">{{$related->name}}</a>
+											<a class="link-muted" href="{{route('videoItem', $related->slug)}}">{{$related->name}}</a>
 										</h4>
 										<small>{!! $related->preview_text !!}</small>
 									</div>
@@ -89,9 +86,9 @@
 													<a href="{{route('news', $category->slug)}}">{{$category->name}}</a>
 												@endforeach
 											@endunless
-											<span class="icon icon-calendar"></span> {{$related->created_at}}
+											<span class="icon icon-calendar"></span> {{$related->created}}
 											<span class="icon icon-eye"></span> {{$related->views}}
-											<span class="icon icon-comment"></span> 22
+											{{--<span class="icon icon-comment"></span> 22--}}
 										</small>
 									</div>
 								</div>

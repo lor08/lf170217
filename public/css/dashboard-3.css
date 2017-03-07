@@ -162,3 +162,13 @@
   .col-big-3 { width: 25%; }  
   .col-big-2 { width: 16.666667%; }
 }
+
+.h135 {
+  height: 135px;
+}
+.h400 {
+  height: 400px;
+}
+.min-h40{
+  min-height: 40px;
+}

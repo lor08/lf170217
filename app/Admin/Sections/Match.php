@@ -123,6 +123,7 @@ class Match extends Section
 								return $query->where('league_id', $item->getDependValue('league_id'));
 							})
 							->setDisplay('name'),
+						AdminFormElement::text('slug', 'Slug')->unique(),
 						AdminFormElement::text('resHome', 'resHome'),
 						AdminFormElement::text('resGuest', 'resGuest'),
 					], 4)

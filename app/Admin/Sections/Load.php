@@ -46,10 +46,11 @@ class Load extends Section
 	public function onDisplay()
 	{
 		$display = AdminDisplay::datatables()->setHtmlAttribute('class', 'table-primary');
+		$display->with(['categories']);
 		$display->setColumns(
 			AdminColumn::text('id', '#')->setWidth('30px'),
 			AdminColumn::link('name', 'Name'),
-			AdminColumn::text('category_id', 'Category')->setWidth('300px'),
+			AdminColumn::lists('categories.name', 'Category')->setWidth('300px'),
 			AdminColumn::text('status', 'Status')->setWidth('100px'),
 			AdminColumn::text('views', 'Views')->setWidth('50px'),
 //			AdminColumn::text('downloads', 'Downloads')->setWidth('50px'),
@@ -67,7 +68,7 @@ class Load extends Section
 	{
 		$cat_id = config('liga-fifa');
 		$tabs = AdminDisplay::tabbed();
-		$tabs->setTabs(function () use ($id) {
+		$tabs->setTabs(function () use ($id, $cat_id) {
 			$tabs = [];
 			$form = AdminForm::panel()
 				->addBody([
@@ -83,6 +84,7 @@ class Load extends Section
 										->where('id', $cat_id['CategoryIdDownloads'])
 										->orWhere('parent_id', $cat_id['CategoryIdDownloads']);
 								}),
+							AdminFormElement::multiselect('tags', 'Теги', \App\Models\Tag::class)->setDisplay('name')->taggable(),
 //							AdminFormElement::select('category_id', 'Category', \App\Models\Country::class)->setDisplay('name'),
 //							AdminFormElement::text('category_id', 'Category'),
 						])

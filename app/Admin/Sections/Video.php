@@ -85,6 +85,7 @@ class Video extends Section
 			)->setDefaultValue('on'),
 			AdminFormElement::textarea('announce', 'announce'),
 			AdminFormElement::textarea('detail', 'detail'),
+			AdminFormElement::multiselect('tags', 'Теги', \App\Models\Tag::class)->setDisplay('name')->taggable(),
 			AdminFormElement::hidden('match_id'),
 		]);
     }

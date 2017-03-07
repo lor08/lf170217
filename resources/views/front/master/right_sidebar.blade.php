@@ -72,7 +72,7 @@
 			<h4 class="card-title">Партнёры</h4>
 		</div>
 		<div class="card-body text-center">
-			<img src="img/240_1_1.gif" class="card-img img-responsive" alt="img" title="img"/>
+			<img src="{{url("img/240_1_1.gif")}}" class="card-img img-responsive" alt="img" title="img"/>
 		</div>
 	</div>
 </div>

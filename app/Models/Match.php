@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Request;
 
 class Match extends Model
 {
@@ -29,16 +30,32 @@ class Match extends Model
 		return $this->hasMany(Chanel::class);
 	}
 
-	public function getDateFullAttribute()
-	{
-		return $this->attributes['date'] . ' ' . $this->attributes['time'];
-	}
-
 	public function setCountryIdAttribute($countryId)
 	{
 		return $countryId;
 	}
+	public function setSlugAttribute($slug)
+	{
+		$slug = str_slug($this->teamHome->name . "-" . $this->teamGuest->name);
+		if ($slug == '') $slug = str_slug(Request::get('name'), '_');
+		if ($cat = self::where('slug', $slug)->first()) {
+			$idmax = self::max('id') + 1;
+			if (isset($this->attributes['id'])) {
+				if ($this->attributes['id'] != $cat->id) {
+					$slug = $slug . '_' . ++$idmax;
+				}
+			} else {
+				if (self::where('slug', $slug)->count() > 0)
+					$slug = $slug . '_' . ++$idmax;
+			}
+		}
+		$this->attributes['slug'] = $slug;
+	}
 
+	public function getDateFullAttribute()
+	{
+		return $this->attributes['date'] . ' ' . $this->attributes['time'];
+	}
 	public function getIsOnlineAttribute()
 	{
 		$start = Carbon::parse($this->datetime)->addMinutes(-15);

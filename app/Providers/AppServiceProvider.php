@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
 		Schema::defaultStringLength(191);
 		Carbon::setLocale('ru');
+		setlocale(LC_ALL, 'ru_RU.utf8');
         //
     }
 
