@@ -5,13 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Request;
 
-class Country extends Model
+class Page extends Model
 {
-	public function league()
-	{
-		return $this->hasOne(League::class);
-	}
-
 	public function setSlugAttribute($slug)
 	{
 		if ($slug == '') $slug = str_slug(Request::get('name'), '_');

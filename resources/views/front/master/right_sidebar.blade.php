@@ -19,7 +19,7 @@
 				<strong>@lang('messages.' . $type)</strong>
 				@foreach($dateMatch as $key => $match)
 					<div class="">
-						<span class="flag-icon flag-icon-gb"></span>
+						<span class="flag-icon flag-icon-{{$match->league->country->icon}}"></span>
 						<span class="badge @if($match->isOnline) badge-success @else badge-outline-info @endif">{{$match->startTime}}</span>
 						<a class="link-muted" href="{{route('onlineItem', $match->slug)}}">{{$match->teamHome->name}} - {{$match->teamGuest->name}}</a>
 					</div>

@@ -23,11 +23,11 @@
 			<div class="card">
 				<div class="card-header">
 					<h2 class="card-title fw-l">
-						<a class="link-muted" href="{{route('newsItem', $item->slug)}}">{{$item->name}}</a>
+						<a class="link-muted" href="{{route('videoItem', $item->slug)}}">{{$item->name}}</a>
 					</h2>
 				</div>
 				<div class="card-body">
-					<img class="img" src="{{$item->preview_img}}" width="200px" alt="{{$item->name}}">
+					<img class="img" src="{{url($item->preview_img)}}" width="200px" alt="{{$item->name}}">
 					<small>{!! $item->preview_text !!}</small>
 				</div>
 				<div class="card-footer">

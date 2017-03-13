@@ -21,6 +21,7 @@ class CountrySeeder extends Seeder
 		$year->save();
 		$attributes = array(
 			'name' => "Россия",
+			'icon' => "ru",
 			'slug' => str_slug("Russian"),
 		);
 		$country = new Country($attributes);
@@ -35,6 +36,7 @@ class CountrySeeder extends Seeder
 		$league->save();
 		$attributes = array(
 			'name' => "Англия",
+			'icon' => "gb",
 			'slug' => str_slug("England"),
 		);
 		$country = new Country($attributes);
@@ -49,6 +51,7 @@ class CountrySeeder extends Seeder
 		$league->save();
 		$attributes = array(
 			'name' => "Испания",
+			'icon' => "es",
 			'slug' => str_slug("Spain"),
 		);
 		$country = new Country($attributes);
@@ -63,6 +66,7 @@ class CountrySeeder extends Seeder
 		$league->save();
 		$attributes = array(
 			'name' => "Италия",
+			'icon' => "it",
 			'slug' => str_slug("Italy"),
 		);
 		$country = new Country($attributes);
@@ -77,6 +81,7 @@ class CountrySeeder extends Seeder
 		$league->save();
 		$attributes = array(
 			'name' => "Германия",
+			'icon' => "de",
 			'slug' => str_slug("Germany"),
 		);
 		$country = new Country($attributes);
@@ -91,6 +96,7 @@ class CountrySeeder extends Seeder
 		$league->save();
 		$attributes = array(
 			'name' => "Франция",
+			'icon' => "fr",
 			'slug' => str_slug("France"),
 		);
 		$country = new Country($attributes);
@@ -105,12 +111,14 @@ class CountrySeeder extends Seeder
 		$league->save();
 		$attributes = array(
 			'name' => "Голландия",
+			'icon' => "hl",
 			'slug' => str_slug("Holland"),
 		);
 		$country = new Country($attributes);
 		$country->save();
 		$attributes = array(
 			'name' => "Украина",
+			'icon' => "ua",
 			'slug' => str_slug("Ukraine"),
 		);
 		$country = new Country($attributes);
@@ -124,6 +132,14 @@ class CountrySeeder extends Seeder
 		$attributes = array(
 			'name' => "Лига чемпионов",
 			'slug' => str_slug("Лига чемпионов"),
+			'country_id' => $country->id,
+			'year_id' => $year->id,
+		);
+		$league = new League($attributes);
+		$league->save();
+		$attributes = array(
+			'name' => "Лига Европы",
+			'slug' => str_slug("Лига Европы"),
 			'country_id' => $country->id,
 			'year_id' => $year->id,
 		);

@@ -17,8 +17,10 @@ class CreateVideosTable extends Migration
             $table->increments('id');
 			$table->string('name');
 			$table->string('slug')->unique();
-			$table->text('announce')->nullable();
-			$table->text('detail')->nullable();
+			$table->text('preview_text')->nullable();
+			$table->string('preview_img')->nullable();
+			$table->text('detail_text')->nullable();
+			$table->string('detail_img')->nullable();
 			$table->unsignedInteger('match_id')->nullable();
 			$table->unsignedInteger('status')->default(1);
 			$table->unsignedInteger('views')->default(0);

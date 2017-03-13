@@ -40,7 +40,8 @@ class GrabberController extends Controller
 				break;
 		}
 
-		return Response::json($data);
+		return $data;
+//		return Response::json($data);
 	}
 
 	/**
@@ -202,10 +203,14 @@ class GrabberController extends Controller
 			}
 
 			if (isset($count) and isset($id)) {
+				$bufferString = '';
 				for ($i = 1; $i <= $count; $i++) {
-					$data[] = file_get_contents('http://mnogosporta.pro/uploads/staticxf/' . $id . '_' . $i . '.txt');
+					$bufferString = file_get_contents('http://mnogosporta.pro/uploads/staticxf/' . $id . '_' . $i . '.txt');
+					$bufferString = iconv("CP1251", "UTF-8//TRANSLIT", $bufferString);
+					$data[] = $bufferString;
 				}
 			}
+//			dd($data);
 			$data = array(
 				'content' => implode("\n", $data)
 			);

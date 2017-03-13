@@ -49,6 +49,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		Permit::class => 'App\Admin\Sections\Permit',
 		Role::class => 'App\Admin\Sections\Role',
 		User::class => 'App\Admin\Sections\User',
+		\App\Models\Page::class => 'App\Admin\Sections\Page',
 	];
 
 	/**
@@ -68,6 +69,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
 	private function registerNavigation()
 	{
 		\AdminNavigation::setFromArray([
+			(new Page(\App\Models\Page::class))->setPriority(90)->setTitle('Страницы')->setIcon('fa fa-sitemap'),
 			[
 				'title' => 'Футбол',
 				'icon' => 'fa fa-group',

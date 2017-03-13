@@ -10,13 +10,13 @@ $channels_collection = $item->channels->groupBy('type');
 ?>
 @extends('front.master.layout')
 @section('head')
-	<title>{{$title or ""}}</title>
+	<title>Смотреть онлайн {{$title or ""}}</title>
 	<meta name="description" content="{{$description or ""}}">
 	<meta property="og:url" content="{{url("/")}}">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="title">
 	<meta property="og:description" content="description">
-	{{--<meta property="og:image" content="http://themes.naksoid.com/elephant/img/ae165ef33d137d3f18b7707466aa774d.jpg">--}}
+	<meta property="og:image" content="{{ url("/icon-match?q={$item->league->logo}&w={$item->teamHome->logo}&e={$item->teamGuest->logo}") }}">
 	<meta name="twitter:card" content="summary">
 @endsection
 @section('content')
@@ -32,7 +32,7 @@ $channels_collection = $item->channels->groupBy('type');
 					<div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 						<div class="row gutter-xs text-center">
 							<div class="col-xs-4 col-sm-4 col-md-4">
-								<img class="img-responsive" src="{{$item->teamHome->logo}}"
+								<img class="img-responsive" src="/{{$item->teamHome->logo}}"
 									 alt="{{$item->teamHome->name}}" title="{{$item->teamHome->name}}">
 							</div>
 							<div class="col-xs-4 col-sm-4 col-md-4">
@@ -45,7 +45,7 @@ $channels_collection = $item->channels->groupBy('type');
 								@endif
 							</div>
 							<div class="col-xs-4 col-sm-4 col-md-4">
-								<img class="img-responsive" src="{{$item->teamGuest->logo}}"
+								<img class="img-responsive" src="/{{$item->teamGuest->logo}}"
 									 alt="{{$item->teamGuest->name}}" title="{{$item->teamGuest->name}}">
 							</div>
 						</div>
@@ -54,16 +54,16 @@ $channels_collection = $item->channels->groupBy('type');
 				<div class="row gutter-xs">
 					<div class="col-md-12 text-center">
 						<p>Начало {{$item->startDate}} в {{$item->startTime}} | {{$item->league->name}} {{$item->year->name}}. {{$title}} онлайн</p>
-						<p>Матч {{$title}} в HD, посмотрело {{$item->view}} человек(а)</p>
+						<p>Матч {{$title}} в HD, посмотрело {{$item->views}} человек(а)</p>
 						<p>Смотреть онлайн {{$title}} | Прямая видео трансляция матча {{$title}}</p>
 
-						@unless($item->isOnline)
+						@if(!$item->isOnline and !$item->isFinished)
 							<p>Ссылки на трансляцию будут доступны за 15 минут до начала матча</p>
 							<p>Матч начнется {{$item->dateForHumans}}</p>
-						@endunless
-						@unless($item->isFinished)
+						@endif
+						@if($item->isFinished)
 							<p>Матч завершен, ожидайте обзоры и запись матча</p>
-						@endunless
+						@endif
 					</div>
 					@unless($channels_collection->isEmpty())
 					<div class="col-md-12">
@@ -112,10 +112,10 @@ $channels_collection = $item->channels->groupBy('type');
 			<div class="card-footer">
 				<div class="pull-left">
 					<small>
-						<span class="icon icon-folder"></span> Видео Обзоры
-						<span class="icon icon-calendar"></span> 22 Янв
-						<span class="icon icon-eye"></span> {{$item->view}}
-						<span class="icon icon-comment"></span> 22
+						<span class="icon icon-folder"></span> {{$item->league->name}} {{$item->year->name}}
+						<span class="icon icon-calendar"></span> {{$item->startDate}}
+						<span class="icon icon-eye"></span> {{$item->views}}
+						{{--<span class="icon icon-comment"></span> 22--}}
 					</small>
 				</div>
 				<div class="pull-right">
@@ -126,7 +126,7 @@ $channels_collection = $item->channels->groupBy('type');
 				<div class="clearfix"></div>
 			</div>
 		</div>
-		<div class="card related">
+{{--		<div class="card related">
 			<div class="card-header text-center">
 				<strong class="card-title">Похожие материалы</strong>
 			</div>
@@ -214,6 +214,6 @@ $channels_collection = $item->channels->groupBy('type');
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>--}}
 	</div>
 @endsection

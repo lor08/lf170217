@@ -11,16 +11,17 @@ class NewsSeeders extends Seeder
      */
     public function run()
     {
-		$faker = Faker\Factory::create();
+//		$faker = Faker\Factory::create();
+//
+//		$limit = 33;
+//
+//		for ($i = 0; $i < $limit; $i++) {
+//			DB::table('customers')->insert([ //,
+//				'name' => $faker->name,
+//				'email' => $faker->unique()->email,
+//				'contact_number' => $faker->phoneNumber,
+//			]);
+//		}
 
-		$limit = 33;
-
-		for ($i = 0; $i < $limit; $i++) {
-			DB::table('customers')->insert([ //,
-				'name' => $faker->name,
-				'email' => $faker->unique()->email,
-				'contact_number' => $faker->phoneNumber,
-			]);
-		}
     }
 }

@@ -33,7 +33,7 @@ class CreateMatchesTable extends Migration
 
 			$table->string('unstring')->nullable()->unique();
 
-			$table->integer('view')->unsigned()->default(0);
+			$table->integer('views')->unsigned()->default(0);
 			$table->timestamps();
         });
     }

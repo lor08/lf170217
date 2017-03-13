@@ -18,7 +18,7 @@ class News extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'name', 'slug', 'preview_text', 'preview_img', 'detail_text', 'detail_img', 'views', 'sort', 'status'
+		'name', 'slug', 'preview_text', 'preview_img', 'detail_text', 'detail_img', 'views', 'sort', 'status', 'created_at'
 	];
 
 	public function setSlugAttribute($slug)

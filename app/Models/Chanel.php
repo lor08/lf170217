@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cache;
 use Illuminate\Database\Eloquent\Model;
 
 class Chanel extends Model
@@ -9,11 +10,31 @@ class Chanel extends Model
 	protected $fillable = [
 		'type', 'content', 'match_id'
 	];
+
 	public $timestamps = false;
+
+	public static function boot()
+	{
+		parent::boot();
+
+		static::saved(function($channel){
+			$cacheKey = Match::class . "_" . $channel->match->slug;
+			if (Cache::has($cacheKey)) {
+				Cache::forget($cacheKey);
+			}
+		});
+		static::deleted(function($channel){
+			$cacheKey = Match::class . "_" . $channel->match->slug;
+			if (Cache::has($cacheKey)) {
+				Cache::forget($cacheKey);
+			}
+		});
+
+	}
 
 	public function match()
 	{
-		return $this->hasOne(Match::class);
+		return $this->belongsTo(Match::class);
 	}
 
 	public function scopeWithMatch($query, $onlineId)

@@ -68,26 +68,33 @@ class Video extends Section
     public function onEdit($id)
     {
     	$cat_id = config('liga-fifa');
-		return AdminForm::panel()->addBody([
-			AdminFormElement::text('name', 'Name')->required(),
-			AdminFormElement::text('slug', 'slug')->unique(),
-			AdminFormElement::multiselect('categories', 'Category', \App\Models\Category::class)
-				->setDisplay('name')
-				->setLoadOptionsQueryPreparer(function ($element, $query) use ($cat_id) {
-					return $query
-						->where('id', $cat_id['CategoryIdVideo'])
-						->orWhere('parent_id', $cat_id['CategoryIdVideo']);
-				}),
-			AdminFormElement::select(
-				'status',
-				'Status',
-				[1 => 'on', 0 => 'off',]
-			)->setDefaultValue('on'),
-			AdminFormElement::textarea('announce', 'announce'),
-			AdminFormElement::textarea('detail', 'detail'),
-			AdminFormElement::multiselect('tags', 'Теги', \App\Models\Tag::class)->setDisplay('name')->taggable(),
-			AdminFormElement::hidden('match_id'),
+		$form = AdminForm::panel();
+		$tabs = AdminDisplay::tabbed([
+			'Видео' => new \SleepingOwl\Admin\Form\FormElements([
+				AdminFormElement::checkbox('status', 'Активность')->setDefaultValue(true),
+				AdminFormElement::text('name', 'Название')->required(),
+				AdminFormElement::multiselect('categories', 'Category', \App\Models\Category::class)
+					->setDisplay('name')
+					->setLoadOptionsQueryPreparer(function ($element, $query) use ($cat_id) {
+						return $query
+							->where('id', $cat_id['CategoryIdVideo'])
+							->orWhere('parent_id', $cat_id['CategoryIdVideo']);
+					}),
+				AdminFormElement::text('slug', 'Символьный код (Заполняется автоматически)')->unique(),
+				AdminFormElement::multiselect('tags', 'Теги', \App\Models\Tag::class)->setDisplay('name')->taggable(),
+				AdminFormElement::hidden('match_id'),
+			]),
+			'Аннонс' => new \SleepingOwl\Admin\Form\FormElements([
+				AdminFormElement::wysiwyg('preview_text', 'Описание для анонса'),
+				AdminFormElement::image('preview_img', 'Картинка для анонса'),
+			]),
+			'Подробно' => new \SleepingOwl\Admin\Form\FormElements([
+				AdminFormElement::wysiwyg('detail_text', 'Детальное описание'),
+				AdminFormElement::image('detail_img', 'Детальная картинка'),
+			]),
 		]);
+		$form->addElement($tabs);
+		return $form;
     }
 
     /**

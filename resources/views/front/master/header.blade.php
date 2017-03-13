@@ -10,7 +10,7 @@
 	<div class="navbar navbar-default">
 		<div class="navbar-header">
 			<a class="navbar-brand navbar-brand-center" href="{{url("/")}}">
-				<img class="navbar-brand-logo" src="{{url("img/logo-inverse.svg")}}" alt="LIGA FIFA">
+				<img class="navbar-brand-logo" src="{{url("img/logo-liga-fifa.png")}}" alt="LIGA FIFA">
 			</a>
 			<button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse"
 					data-target="#sidenav">
@@ -62,14 +62,14 @@
 							</div>
 						</form>
 					</li>
-					<li><a href="">Россия</a></li>
-					<li><a href="">Англия</a></li>
-					<li><a href="">Испания</a></li>
-					<li><a href="">Италия</a></li>
-					<li><a href="">Германия</a></li>
-					<li><a href="">Франция</a></li>
-					<li><a href="">Голландия</a></li>
-					<li><a href="">Украина</a></li>
+					<li><a href="{{ route('country', 'russian') }}">Россия</a></li>
+					<li><a href="{{ route('country', 'england') }}">Англия</a></li>
+					<li><a href="{{ route('country', 'spain') }}">Испания</a></li>
+					<li><a href="{{ route('country', 'italy') }}">Италия</a></li>
+					<li><a href="{{ route('country', 'germany') }}">Германия</a></li>
+					<li><a href="{{ route('country', 'france') }}">Франция</a></li>
+					<li><a href="{{ route('country', 'holland') }}">Голландия</a></li>
+					<li><a href="{{ route('country', 'ukraine') }}">Украина</a></li>
 				</ul>
 			</nav>
 		</div>

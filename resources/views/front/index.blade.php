@@ -69,7 +69,7 @@
 					<div class="card">
 						<a class="card-img overlay overlay-hover" href="{{route('videoItem', $video->slug)}}">
 							<div class="overlay-gradient">
-								<img class="card-img img-responsive" src="/img/8525358731.jpg"
+								<img class="card-img img-responsive" src="{{url($video->preview_img)}}"
 									 alt="{{$video->name}}" title="{{$video->name}}">
 							</div>
 							<div class="overlay-content">

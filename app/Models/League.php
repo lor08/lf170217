@@ -15,6 +15,14 @@ class League extends Model
 	{
 		return $this->belongsTo(LeagueYear::class);
 	}
+	public function matches()
+	{
+		return $this->hasMany(Match::class);
+	}
+	public function clubs()
+	{
+		return $this->hasMany(Club::class);
+	}
 
 	public function setSlugAttribute($slug)
 	{

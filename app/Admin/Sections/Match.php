@@ -2,6 +2,7 @@
 
 namespace App\Admin\Sections;
 
+use Carbon\Carbon;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
@@ -46,6 +47,11 @@ class Match extends Section
 	public function onDisplay()
 	{
 		$display = AdminDisplay::datatablesAsync()->setHtmlAttribute('class', 'table-primary');
+		$display->getApply()->push(function ($query) {
+			$now = Carbon::now()->format("Y-m-d");
+			$tomorrow = Carbon::tomorrow()->addDay()->format("Y-m-d");
+			$query->whereBetween('datetime', [$now, $tomorrow])->orderBy('datetime');
+		});
 		$display->with(['league', 'teamHome', 'teamGuest']);
 		$display->setColumnFilters([
 			null,
@@ -66,16 +72,16 @@ class Match extends Section
 		]);
 		$display->setColumns(
 			AdminColumn::text('id', '#')->setWidth('30px'),
-			AdminColumn::text('league.name', 'League')->setWidth('300px'),
-			AdminColumn::text('stage', 'stage')->setWidth('30px')->setHtmlAttribute('class', 'text-center'),
+			AdminColumn::text('league.name', 'Лига')->setWidth('300px'),
+			AdminColumn::text('stage', 'Этап\Тур')->setWidth('30px')->setHtmlAttribute('class', 'text-center'),
 
-			AdminColumn::link('teamHome.name', 'teamHome')->setWidth('300px'),
+			AdminColumn::link('teamHome.name', 'Хозяева')->setWidth('300px')->setHtmlAttribute('class', 'text-left'),
 			AdminColumn::link('resHome', 'resHome')->setWidth('30px')->setHtmlAttribute('class', 'text-center'),
 			AdminColumn::link('resGuest', 'resGuest')->setWidth('30px')->setHtmlAttribute('class', 'text-center'),
-			AdminColumn::link('teamGuest.name', 'teamGuest')->setWidth('300px'),
+			AdminColumn::link('teamGuest.name', 'Гости')->setWidth('300px')->setHtmlAttribute('class', 'text-right'),
 
-			AdminColumn::datetime('datetime', 'datetime')->setFormat('d.m.Y H:i')->setWidth('150px'),
-			AdminColumn::text('view', 'view')->setWidth('30px')
+			AdminColumn::datetime('datetime', 'Время')->setFormat('d.m.Y H:i')->setWidth('150px'),
+			AdminColumn::text('views', 'Просмотры')->setHtmlAttribute('class', 'text-center')->setWidth('30px')
 		);
 		return $display;
 	}

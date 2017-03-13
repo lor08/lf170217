@@ -60,6 +60,7 @@ class Country extends Section
 		return AdminForm::panel()->addBody([
 			AdminFormElement::text('name', 'Name')->required(),
 			AdminFormElement::text('slug', 'Slug')->unique(),
+			AdminFormElement::text('icon', 'icon')->unique(),
 			AdminFormElement::image('logo', 'Logo')->setUploadPath(function (\Illuminate\Http\UploadedFile $file) {
 				return 'country';
 			})

@@ -24,13 +24,13 @@
 					</li>
 
 					<li>
-						<a href="">
+						<a href="{{ route('home') }}">
 							<span class="sidenav-icon icon icon-home"></span>
 							<span class="sidenav-label">Главная</span>
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="{{ route('online-tv') }}">
 							<span class="sidenav-icon icon icon-tv"></span>
 							<span class="sidenav-label">Online TV</span>
 						</a>
@@ -38,7 +38,7 @@
 
 					<li class="sidenav-heading">Материалы</li>
 					<li>
-						<a href="">
+						<a href="{{ route('news') }}">
 							<span class="sidenav-icon icon icon-newspaper-o"></span>
 							<span class="sidenav-label">Новости сайта</span>
 						</a>
@@ -84,8 +84,8 @@
 						</a>
 						<ul class="sidenav-subnav collapse">
 							<li class="sidenav-subheading">Видео материалы</li>
-							<li><a href="">Видео обзоры</a></li>
-							<li><a href="">Записи матчей</a></li>
+							<li><a href="{{ route('video', 'reviews') }}">Видео обзоры</a></li>
+							<li><a href="{{ route('video', 'zapisi-matchey') }}">Записи матчей</a></li>
 							<li><a href="">Обучение FIFA</a></li>
 							<li><a href="">Разное</a></li>
 						</ul>
@@ -192,13 +192,13 @@
 
 					<li class="sidenav-heading">Информация</li>
 					<li>
-						<a href="">
+						<a href="{{ route('page', 'how_watch') }}">
 							<span class="sidenav-icon icon icon-info-circle"></span>
 							<span class="sidenav-label">Как смотреть футбол</span>
 						</a>
 					</li>
 					<li>
-						<a href="">
+						<a href="{{ route('page', 'faq') }}">
 							<span class="sidenav-icon icon icon-question-circle"></span>
 							<span class="sidenav-label">FAQ</span>
 						</a>

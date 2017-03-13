@@ -9,6 +9,16 @@ use Request;
 class Match extends Model
 {
 
+//	public static function boot()
+//	{
+//		parent::boot();
+//
+//		static::saved(function($match){
+//			dd($match);
+//		});
+//
+//	}
+
 	public function league()
 	{
 		return $this->belongsTo(League::class);
@@ -54,7 +64,7 @@ class Match extends Model
 
 	public function getDateFullAttribute()
 	{
-		return $this->attributes['date'] . ' ' . $this->attributes['time'];
+		return Carbon::parse($this->datetime)->format("d-m-Y, H:i");
 	}
 	public function getIsOnlineAttribute()
 	{
@@ -65,8 +75,8 @@ class Match extends Model
 	}
 	public function getIsFinishedAttribute()
 	{
-		$start = Carbon::parse($this->datetime);
-		return Carbon::now() < $start;
+		$end = Carbon::parse($this->datetime)->addHours(2);
+		return Carbon::now() > $end;
 	}
 	public function getDateForHumansAttribute()
 	{

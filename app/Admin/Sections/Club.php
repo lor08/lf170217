@@ -106,9 +106,7 @@ class Club extends Section
 		return AdminForm::panel()
 			->addBody($columns)
 			->addFooter([
-				AdminFormElement::image('logo', 'Logo')->setUploadPath(function (\Illuminate\Http\UploadedFile $file) {
-					return 'club';
-				})
+				AdminFormElement::image('logo', 'Logo')
 			]);
     }
 

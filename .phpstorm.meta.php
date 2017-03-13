@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-03-06.
+    * Generated on 2017-03-13.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -26,7 +26,7 @@ namespace PHPSTORM_META {
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
             'db.factory' instanceof \Illuminate\Database\Connectors\ConnectionFactory,
             'db' instanceof \Illuminate\Database\DatabaseManager,
-            'db.connection' instanceof \Illuminate\Database\SQLiteConnection,
+            'db.connection' instanceof \Illuminate\Database\MySqlConnection,
             'Illuminate\Contracts\Queue\EntityResolver' instanceof \Illuminate\Database\Eloquent\QueueEntityResolver,
             'encrypter' instanceof \Illuminate\Encryption\Encrypter,
             'files' instanceof \Illuminate\Filesystem\Filesystem,
@@ -66,6 +66,7 @@ namespace PHPSTORM_META {
             'sentinel.checkpoint.throttle' instanceof \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint,
             'sentinel.reminders' instanceof \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository,
             'sentinel' instanceof \Cartalyst\Sentinel\Sentinel,
+            'image' instanceof \Intervention\Image\ImageManager,
             'sleeping_owl.message' instanceof \SleepingOwl\Admin\Widgets\Messages\MessageStack,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -175,7 +176,7 @@ namespace PHPSTORM_META {
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
             'db.factory' instanceof \Illuminate\Database\Connectors\ConnectionFactory,
             'db' instanceof \Illuminate\Database\DatabaseManager,
-            'db.connection' instanceof \Illuminate\Database\SQLiteConnection,
+            'db.connection' instanceof \Illuminate\Database\MySqlConnection,
             'Illuminate\Contracts\Queue\EntityResolver' instanceof \Illuminate\Database\Eloquent\QueueEntityResolver,
             'encrypter' instanceof \Illuminate\Encryption\Encrypter,
             'files' instanceof \Illuminate\Filesystem\Filesystem,
@@ -215,6 +216,7 @@ namespace PHPSTORM_META {
             'sentinel.checkpoint.throttle' instanceof \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint,
             'sentinel.reminders' instanceof \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository,
             'sentinel' instanceof \Cartalyst\Sentinel\Sentinel,
+            'image' instanceof \Intervention\Image\ImageManager,
             'sleeping_owl.message' instanceof \SleepingOwl\Admin\Widgets\Messages\MessageStack,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -324,7 +326,7 @@ namespace PHPSTORM_META {
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
             'db.factory' instanceof \Illuminate\Database\Connectors\ConnectionFactory,
             'db' instanceof \Illuminate\Database\DatabaseManager,
-            'db.connection' instanceof \Illuminate\Database\SQLiteConnection,
+            'db.connection' instanceof \Illuminate\Database\MySqlConnection,
             'Illuminate\Contracts\Queue\EntityResolver' instanceof \Illuminate\Database\Eloquent\QueueEntityResolver,
             'encrypter' instanceof \Illuminate\Encryption\Encrypter,
             'files' instanceof \Illuminate\Filesystem\Filesystem,
@@ -364,6 +366,7 @@ namespace PHPSTORM_META {
             'sentinel.checkpoint.throttle' instanceof \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint,
             'sentinel.reminders' instanceof \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository,
             'sentinel' instanceof \Cartalyst\Sentinel\Sentinel,
+            'image' instanceof \Intervention\Image\ImageManager,
             'sleeping_owl.message' instanceof \SleepingOwl\Admin\Widgets\Messages\MessageStack,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
@@ -473,7 +476,7 @@ namespace PHPSTORM_META {
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
             'db.factory' instanceof \Illuminate\Database\Connectors\ConnectionFactory,
             'db' instanceof \Illuminate\Database\DatabaseManager,
-            'db.connection' instanceof \Illuminate\Database\SQLiteConnection,
+            'db.connection' instanceof \Illuminate\Database\MySqlConnection,
             'Illuminate\Contracts\Queue\EntityResolver' instanceof \Illuminate\Database\Eloquent\QueueEntityResolver,
             'encrypter' instanceof \Illuminate\Encryption\Encrypter,
             'files' instanceof \Illuminate\Filesystem\Filesystem,
@@ -513,6 +516,7 @@ namespace PHPSTORM_META {
             'sentinel.checkpoint.throttle' instanceof \Cartalyst\Sentinel\Checkpoints\ThrottleCheckpoint,
             'sentinel.reminders' instanceof \Cartalyst\Sentinel\Reminders\IlluminateReminderRepository,
             'sentinel' instanceof \Cartalyst\Sentinel\Sentinel,
+            'image' instanceof \Intervention\Image\ImageManager,
             'sleeping_owl.message' instanceof \SleepingOwl\Admin\Widgets\Messages\MessageStack,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,

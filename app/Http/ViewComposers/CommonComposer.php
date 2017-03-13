@@ -30,7 +30,7 @@ class CommonComposer
 		$online_match = Cache::remember(Match::class . '_online_sidebar', config('liga-fifa.cacheTime'), function () {
 			$now = Carbon::now()->format("Y-m-d");
 			$tomorrow = Carbon::tomorrow()->addDay()->format("Y-m-d");
-			$online_data = Match::with('league', 'teamHome', 'teamGuest')
+			$online_data = Match::with('league.country', 'teamHome', 'teamGuest')
 				->whereBetween('datetime', [$now, $tomorrow])
 				->orderBy('datetime')
 				->get();

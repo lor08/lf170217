@@ -30,7 +30,7 @@
 					<div class="col-md-12">
 						<div class="row gutter-xs">
 							<div class="col-sm-4 col-md-4">
-								<img class="img-responsive" src="{{url($item->detail_img)}}" alt="{{$item->name}}">
+								<img class="img-responsive" src="{{$item->detail_img}}" alt="{{$item->name}}">
 							</div>
 							<div class="col-sm-8 col-md-8">
 								{!! $item->detail_text !!}
