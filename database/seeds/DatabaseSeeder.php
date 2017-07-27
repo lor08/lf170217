@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 		$this->call(CountrySeeder::class);
 		$this->call(CategorySeeder::class);
 
-		News::truncate();
-		factory(News::class, 100)->create();
+		// News::truncate();
+		// factory(News::class, 100)->create();
     }
 }

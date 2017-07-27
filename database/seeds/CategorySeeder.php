@@ -41,5 +41,17 @@ class CategorySeeder extends Seeder
 		);
 		$node = Category::create($attributes, $parent);
 		$node->save();
+		$attributes = array(
+			'name' => "Аннонсы",
+			'slug' => str_slug("Аннонсы"),
+		);
+		$node = Category::create($attributes, $parent);
+		$node->save();
+		$attributes = array(
+			'name' => "Футбольные передачи",
+			'slug' => str_slug("Футбольные передачи"),
+		);
+		$node = Category::create($attributes, $parent);
+		$node->save();
 	}
 }

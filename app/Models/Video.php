@@ -11,6 +11,14 @@ use Request;
 class Video extends Model
 {
 	use Categorizable, Taggable;
+	
+	/**
+	 * The attributes that are mass assignable.
+	 * @var array
+	 */
+	protected $fillable = [
+		'name', 'slug', 'preview_text', 'preview_img', 'detail_text', 'detail_img', 'views', 'sort', 'status', 'created_at'
+	];
 
 	public function setSlugAttribute($slug)
 	{

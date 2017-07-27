@@ -27,7 +27,9 @@
 					</h2>
 				</div>
 				<div class="card-body">
+					@if($item->preview_img)
 					<img class="img" src="{{url($item->preview_img)}}" width="200px" alt="{{$item->name}}">
+					@endif
 					<small>{!! $item->preview_text !!}</small>
 				</div>
 				<div class="card-footer">
